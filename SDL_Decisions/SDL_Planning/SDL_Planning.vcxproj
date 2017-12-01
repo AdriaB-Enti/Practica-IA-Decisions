@@ -142,7 +142,9 @@
     <ClInclude Include="..\src\Agent.h" />
     <ClInclude Include="..\src\Path.h" />
     <ClInclude Include="..\src\ScenePlanning.h" />
+    <ClInclude Include="..\src\State.h" />
     <ClInclude Include="..\src\SteeringBehavior.h" />
+    <ClInclude Include="..\src\Transition.h" />
     <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SDL_SimpleApp.h" />

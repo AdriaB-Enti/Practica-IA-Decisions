@@ -59,6 +59,12 @@
     <ClInclude Include="..\src\ScenePlanning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Transition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\spritesheet.png">
