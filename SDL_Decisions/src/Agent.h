@@ -7,7 +7,14 @@
 #include "Vector2D.h"
 #include "utils.h"
 #include "SteeringBehavior.h"
+#include "State.h"
 
+struct Needs {
+	int maxGold; //quan de or pot portar a sobre
+	int thirst;
+	int rest;
+	int gold;
+};
 
 class Agent
 {
@@ -32,6 +39,11 @@ private:
 	int sprite_w;
 	int sprite_h;
 
+	//PRACTICA3
+	HomeState hs;
+	State * currentState = &hs; //inicialitzem a home
+	Needs playerNeeds{ 50,0,100,0 };
+
 public:
 	Agent();
 	~Agent();
@@ -48,5 +60,5 @@ public:
 	void update(Vector2D steering_force, float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
-	
+	Needs GetPlayerNeeds();
 };

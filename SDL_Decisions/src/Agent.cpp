@@ -110,6 +110,9 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event)
 	if (position.y < 0) position.y = TheApp::Instance()->getWinSize().y;
 	if (position.x > TheApp::Instance()->getWinSize().x) position.x = 0;
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
+
+	//PRACTICA3
+	currentState->Update(dtime, this);
 }
 
 void Agent::draw()
@@ -155,4 +158,8 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 		SDL_FreeSurface(image);
 
 	return true;
+}
+
+Needs Agent::GetPlayerNeeds() {
+	return playerNeeds;
 }

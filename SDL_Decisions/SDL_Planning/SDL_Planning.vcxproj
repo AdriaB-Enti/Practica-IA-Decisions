@@ -89,7 +89,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\SDL2_ttf\lib\x86;$(SolutionDir)lib\SDL2_image\lib\x86;$(SolutionDir)lib\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib</AdditionalDependencies>
     </Link>
@@ -135,6 +135,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\ScenePlanning.cpp" />
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
+    <ClCompile Include="..\src\State.cpp" />
     <ClCompile Include="..\src\SteeringBehavior.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
   </ItemGroup>

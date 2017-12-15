@@ -1,9 +1,3 @@
-﻿  utils.cpp
-  SteeringBehavior.cpp
-  SDL_SimpleApp.cpp
-  ScenePlanning.cpp
-  main.cpp
-  Agent.cpp
-  Generating Code...
+﻿  Agent.cpp
   SDL_Planning.vcxproj -> C:\Users\pblanes\IA\Practica3\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
   SDL_Planning.vcxproj -> C:\Users\pblanes\IA\Practica3\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)

@@ -4,7 +4,7 @@
 
 #include "SDL_SimpleApp.h"
 #include "ScenePlanning.h"
-#include "Transition.h"
+#include "State.h"
 
 #define FRAMES_PER_SEC 30
 
@@ -12,6 +12,9 @@ using namespace std;
 
 int main(int argc, char ** argv)
 {
+
+	
+
 
 	bool quit = false;
 	SDL_Event event;
@@ -68,7 +71,4 @@ int main(int argc, char ** argv)
 	}
 
 	return 0;
-}
-
-bool prova() {
 }

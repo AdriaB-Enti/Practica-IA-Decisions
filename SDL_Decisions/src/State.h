@@ -2,12 +2,21 @@
 #include <iostream>
 #include <SDL.h>
 
-class State
-{
+
+class Agent;
+
+class State {
+	
+public:	
+	virtual void Enter(){}
+	virtual void Update(float deltaTime, Agent* agent){}
+	virtual void Exit(){}
+};
+
+class HomeState : public State {
 public:
-	State() {};
-	virtual ~State() {};
-	virtual void Enter();
-	virtual void Update(float dtime);
-	virtual void Exit();
+	void Enter(){}
+	void Update(float deltaTime, Agent* agent);
+	void Exit(){}
+	
 };
