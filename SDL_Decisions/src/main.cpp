@@ -7,6 +7,7 @@
 
 #include "State.h"
 #include "Transition.h"
+#include "GOAP.h"
 
 #define FRAMES_PER_SEC 30
 
@@ -22,9 +23,10 @@ void PassPtr(bool(*pt2Func)())
 }
 int main(int argc, char ** argv)
 {
+	//PROVEES
+	PassPtr(prova);	
 	
-	PassPtr(prova);
-	
+	//ENDPROVEES
 
 	bool quit = false;
 	SDL_Event event;

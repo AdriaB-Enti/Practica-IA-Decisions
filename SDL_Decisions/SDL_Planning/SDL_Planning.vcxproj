@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Agent.cpp" />
+    <ClCompile Include="..\src\GOAP.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\ScenePlanning.cpp" />
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Agent.h" />
+    <ClInclude Include="..\src\GOAP.h" />
     <ClInclude Include="..\src\Path.h" />
     <ClInclude Include="..\src\ScenePlanning.h" />
     <ClInclude Include="..\src\State.h" />
