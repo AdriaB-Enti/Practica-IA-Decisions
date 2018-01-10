@@ -6,11 +6,11 @@ enum evento{enoughGold, tired, wantMoreMemes};
 void EnoughGold();
 
 class Transition {
-	void(*CheckCondition)();
+	bool(*CheckCondition)();
 	State currState;
 	State nextState;
 
-	Transition(/*State _currState, State _nextState,*/ void(*conditionFunc)());
+	Transition(bool(*pt2Func)()/*,State _currState, State _nextState*/);
 	State GetCurrState();
 	State GetNextState();	
 };

@@ -12,14 +12,18 @@
 
 using namespace std;
 
-void prova() {
+bool prova() {
 	std::cout << "hola" << std::endl;
+	return true;
+}
+void PassPtr(bool(*pt2Func)())
+{
+	(*pt2Func)();
 }
 int main(int argc, char ** argv)
 {
 	
-	Transition t1();
-	
+	PassPtr(prova);
 	
 
 	bool quit = false;
@@ -78,5 +82,6 @@ int main(int argc, char ** argv)
 
 	return 0;
 }
+
 
 

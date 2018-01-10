@@ -4,6 +4,6 @@ void EnoughGold() {
 	std::cout << "hola" << std::endl;
 }
 
-Transition::Transition(/*State _currState, State _nextState,*/ void(*conditionFunc)()) {
-	CheckCondition = conditionFunc;
+Transition::Transition(/*State _currState, State _nextState,*/ bool(*pt2Func)()) {
+	CheckCondition = pt2Func;
 }

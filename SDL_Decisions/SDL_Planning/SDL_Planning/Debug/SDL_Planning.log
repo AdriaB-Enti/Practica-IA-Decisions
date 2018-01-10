@@ -1,6 +1,3 @@
 ﻿  main.cpp
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\main.cpp(21): warning C4930: 'Transition t1(void)': no se ha llamado a la función prototipo (¿se pensó una definición de variable?)
-  Transition.cpp
-  Generando código...
   SDL_Planning.vcxproj -> C:\ENTI\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
   SDL_Planning.vcxproj -> C:\ENTI\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)
