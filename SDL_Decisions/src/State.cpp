@@ -4,5 +4,5 @@
 
 void HomeState::Update(float deltaTime, Agent* agent) 
 {
- std::cout << agent->GetPlayerNeeds().rest << std::endl;
+ //std::cout << agent->GetPlayerNeeds().rest << std::endl;
 }
