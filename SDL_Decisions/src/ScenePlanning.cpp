@@ -38,6 +38,7 @@ ScenePlanning::ScenePlanning()
 	currentTarget = Vector2D(0, 0);
 	currentTargetIndex = -1;
 
+	path.points.push_back(cell2pix(coinPosition));
 }
 
 ScenePlanning::~ScenePlanning()
@@ -104,11 +105,15 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
+
+//	
+	
 	if ((currentTargetIndex == -1) && (path.points.size()>0))
 		currentTargetIndex = 0;
 
 	if (currentTargetIndex >= 0)
 	{	
+		
 		float dist = Vector2D::Distance(agents[0]->getPosition(), path.points[currentTargetIndex]);
 		if (dist < path.ARRIVAL_DISTANCE)
 		{
@@ -125,6 +130,8 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 						coinPosition = Vector2D(-1, -1);
 						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3))
 							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
+
+						path.points.push_back(cell2pix(coinPosition));
 					}
 				}
 				else
