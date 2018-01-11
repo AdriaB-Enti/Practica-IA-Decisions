@@ -1,6 +1,11 @@
 #include "GOAP.h"
 
-bool EqualWorldState(WorldState wS1, WorldState wS2) {
+Action::Action(WorldState wS1, WorldState wS2) {
+	preCondition = wS1;
+	effect = wS2;
+}
+
+bool WorldState::EqualWorldState(WorldState wS1, WorldState wS2) {
 	if ((wS1.Agent_viu == dontCare || wS2.Agent_viu == dontCare || wS1.Agent_viu == wS2.Agent_viu) /*&&
 		(wS1.Agent_te_arma == dontCare || wS2.Agent_te_arma == dontCare || wS1.Agent_te_arma == wS2.Agent_te_arma) &&
 		(wS1.Arma_carregada == dontCare || wS2.Arma_carregada == dontCare || wS1.Arma_carregada == wS2.Arma_carregada) &&
@@ -13,3 +18,9 @@ bool EqualWorldState(WorldState wS1, WorldState wS2) {
 	
 	return false;
 }
+
+WorldState WorldState::ApplyAction (Action a){
+
+}
+
+

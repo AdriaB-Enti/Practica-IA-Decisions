@@ -1,7 +1,8 @@
 #pragma once
 
 enum ourBoolean {isTrue, isFalse, dontCare};
-struct WorldState {
+class WorldState {
+public:
 	ourBoolean Agent_viu;
 	/*ourBoolean Agent_te_arma;
 	ourBoolean Arma_carregada;
@@ -10,7 +11,17 @@ struct WorldState {
 	ourBoolean Enemic_alineat;
 	ourBoolean Enemic_aprop;
 	ourBoolean Enemic_viu;*/
+
+	bool EqualWorldState(WorldState wS1, WorldState wS2);
+	WorldState ApplyAction(Action a);
 };
 
-bool EqualWorldState (WorldState wS1, WorldState wS2);
+
+
+class Action {
+	WorldState preCondition;
+	WorldState effect;
+	Action(WorldState wS1, WorldState wS2);
+	void Update(float deltaTime);
+};
 
