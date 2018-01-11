@@ -25,8 +25,8 @@ int main(int argc, char ** argv)
 {
 	//PROVEES
 	//PassPtr(prova);	
-	WorldState w1(isTrue);
-	WorldState w2(dontCare);
+	WorldState w1(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare);
+	WorldState w2(isFalse, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare);
 	bool prova = w1 == w2;
 	cout << prova << endl;
 	//ENDPROVEES
