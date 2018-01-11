@@ -35,8 +35,9 @@ private:
 	Vector2D pix2cell(Vector2D pix);
 	bool isValidCell(Vector2D cell);
 	//	   STATES
-	//		[1]
 	//		[0]
+	//		[1]
 	//	[2]	[3]	[4]
-	std::vector <Vector2D> states = {Vector2D(19,10),Vector2D(19,3),Vector2D(6,19),Vector2D(19,19),Vector2D(33,19) };
+	std::vector <Vector2D> states = {Vector2D(19,3),Vector2D(19,10),Vector2D(6,19),Vector2D(19,19),Vector2D(33,19) };
+	Vector2D money;
 };

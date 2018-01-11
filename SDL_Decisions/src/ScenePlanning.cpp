@@ -59,13 +59,36 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
+
+//////////////////////////////////PATHFINDING-ENTRE-STATES//////////////////////////////////////////////
+		
+		if (event->key.keysym.scancode == SDL_SCANCODE_Z) {
+			Vector2D cell = states[0];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_X) {
+			Vector2D cell = states[1];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_C) {
+			Vector2D cell = states[2];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_V) {
+			Vector2D cell = states[3];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_B) {
+			Vector2D cell = states[4];
+			path.points.push_back(cell2pix(cell));
+		}
 		break;
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			cout << cell.x << ", "<<cell.y << endl;
+			
 			if (isValidCell(cell))
 			{
 				if (path.points.size() > 0)
