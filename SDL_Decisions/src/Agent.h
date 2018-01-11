@@ -10,10 +10,12 @@
 #include "State.h"
 
 struct AgentStatus {
-	int thirst;
-	int rest;
-	int gold;
+	float thirst;		//set -> quan és 0 no té set
+	float rest;			//Descans -> quan està a 0 és quan està cansat
+	float gold;			//diners a les butxaques
+	float moneyInBank;
 };
+
 
 class Agent
 {
@@ -39,14 +41,25 @@ private:
 	int sprite_h;
 
 	//PRACTICA3
-	HomeState hs;
-	State * currentState = &hs; //inicialitzem a home
-	AgentStatus playerNeeds{ 0,100,0 };
+
+	//Aquí posem tots els Estats
+	HomeState homeState = HomeState();
+	BankState bankState = BankState();
+
+	State * currentState = &homeState; //inicialitzem a home
+	AgentStatus playerNeeds{ 0,100,0,0 };
 
 public:
-	Agent();
+	enum stateEnum
+	{
+		Home,
+		Bank,
+		Mine,
+		Drink
+	};
 	~Agent();
 	SteeringBehavior *Behavior();
+	Agent();
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
@@ -55,9 +68,11 @@ public:
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
 	void setMass(float mass);
+	void addAgentStatus(AgentStatus newStatus);
 	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	void update(Vector2D steering_force, float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	AgentStatus GetPlayerNeeds();
+	void changeState(stateEnum newState);
 };
