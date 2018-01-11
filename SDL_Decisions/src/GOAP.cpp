@@ -54,7 +54,16 @@ bool WorldState::CanApplyAction (Action a){
 	return true;	
 }
 
-//DEFINIM LES DIFERENTS ACCIONS
+int WorldState::HeuristicTo(WorldState goal) {
+	int cost = 0;
+	for (int i = 0; i < allVariables.size(); i++) {
+		if (goal.allVariables[i] != dontCare && goal.allVariables[i] != allVariables[i])
+			cost++;
+	}
+	return cost;
+}
+
+//DEFINIM LES DIFERENTS ACCIONS I LES GUARDEM EN UN ARRAY
 
 //scout necessita: player viu -> enemic visible (si no esta viu es igual abans de fer scout tampoc ho pots saber)
 Action scout (WorldState (isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare));
@@ -74,3 +83,6 @@ Action useBomb(WorldState(isTrue, dontCare, dontCare, isTrue, isTrue, dontCare, 
 Action reload(WorldState(isTrue, isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, dontCare, isTrue, dontCare, dontCare, dontCare, dontCare, dontCare));
 //flee necessita: player viu -> ja no estas  a prop
 Action flee(WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, isFalse, dontCare));
+
+vector<Action> actions;
+
