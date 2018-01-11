@@ -5,22 +5,45 @@ Action::Action(WorldState wS1, WorldState wS2) {
 	effect = wS2;
 }
 
-bool WorldState::EqualWorldState(WorldState wS1, WorldState wS2) {
-	if ((wS1.Agent_viu == dontCare || wS2.Agent_viu == dontCare || wS1.Agent_viu == wS2.Agent_viu) /*&&
-		(wS1.Agent_te_arma == dontCare || wS2.Agent_te_arma == dontCare || wS1.Agent_te_arma == wS2.Agent_te_arma) &&
-		(wS1.Arma_carregada == dontCare || wS2.Arma_carregada == dontCare || wS1.Arma_carregada == wS2.Arma_carregada) &&
-		(wS1.Agent_te_bomba == dontCare || wS2.Agent_te_bomba == dontCare || wS1.Agent_te_bomba == wS2.Agent_te_bomba) &&
-		(wS1.Enemic_visible == dontCare || wS2.Enemic_visible == dontCare || wS1.Enemic_visible == wS2.Enemic_visible) &&
-		(wS1.Enemic_alineat == dontCare || wS2.Enemic_alineat == dontCare || wS1.Enemic_alineat == wS2.Enemic_alineat) &&
-		(wS1.Enemic_aprop == dontCare || wS2.Enemic_aprop == dontCare || wS1.Enemic_aprop == wS2.Enemic_aprop) &&
-		(wS1.Enemic_viu == dontCare || wS2.Enemic_viu == dontCare || wS1.Enemic_viu == wS2.Enemic_viu)*/ )
-		return true;
+WorldState::WorldState() {
+	//Agent_viu = dontCare;	
+}
+WorldState::WorldState(ourBoolean agent_viu/*, ourBoolean agent_te_arma, ourBoolean arma_carregada, ourBoolean agent_te_bomba, ourBoolean enemic_visible, ourBoolean enemic_alineat, ourBoolean enemic_aprop, ourBoolean enemic_viu*/) {
+	//Agent_viu = _agent_viu;
+	allVariables.push_back(agent_viu);
+}
+bool WorldState::operator==(WorldState otherState) {
 	
-	return false;
+	for (int i = 0; i < allVariables.size(); i++) {
+		if (allVariables[i] != otherState.allVariables[i] && otherState.allVariables[i] != dontCare)
+			return false;
+	}
+	return true;	
 }
 
-WorldState WorldState::ApplyAction (Action a){
-	return WorldState();
+WorldState WorldState::operator+ (WorldState otherState) {
+	WorldState res;	
+
+	for (int i = 0; i < allVariables.size(); i++) {
+		if (otherState.allVariables[i] == isTrue)
+			res.allVariables.push_back(isTrue);
+		else if (otherState.allVariables[i] == isFalse)
+			res.allVariables.push_back(isFalse);
+		else
+			res.allVariables.push_back(allVariables[i]);
+			
+	}	
+	
+	return res;
+}
+
+bool WorldState::CanApplyAction (Action a){
+
+	for (int i = 0; i < allVariables.size(); i++) {
+		if (a.preCondition.allVariables[i] != dontCare && a.preCondition.allVariables[i] != allVariables[i])
+			return false;
+	}
+	return true;	
 }
 
 

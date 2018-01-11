@@ -24,8 +24,11 @@ void PassPtr(bool(*pt2Func)())
 int main(int argc, char ** argv)
 {
 	//PROVEES
-	PassPtr(prova);	
-	
+	//PassPtr(prova);	
+	WorldState w1(isTrue);
+	WorldState w2(dontCare);
+	bool prova = w1 == w2;
+	cout << prova << endl;
 	//ENDPROVEES
 
 	bool quit = false;
