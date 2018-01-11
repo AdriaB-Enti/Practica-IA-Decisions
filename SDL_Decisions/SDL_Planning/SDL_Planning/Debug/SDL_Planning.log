@@ -1,7 +1,3 @@
 ﻿  GOAP.cpp
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.cpp(25): warning C4018: '<': no coinciden signed/unsigned
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.cpp(35): warning C4018: '<': no coinciden signed/unsigned
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.cpp(50): warning C4018: '<': no coinciden signed/unsigned
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.cpp(59): warning C4018: '<': no coinciden signed/unsigned
-  SDL_Planning.vcxproj -> C:\ENTI\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
-  SDL_Planning.vcxproj -> C:\ENTI\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)
+  SDL_Planning.vcxproj -> C:\Users\pblanes\IA\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
+  SDL_Planning.vcxproj -> C:\Users\pblanes\IA\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)

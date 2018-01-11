@@ -39,6 +39,9 @@
     <ClCompile Include="..\src\Transition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\WorldState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\GOAP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,7 +77,10 @@
     <ClInclude Include="..\src\Transition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GOAP.h">
+    <ClInclude Include="..\src\PriorityComparision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WorldState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
