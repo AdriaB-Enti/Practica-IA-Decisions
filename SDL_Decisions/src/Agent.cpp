@@ -72,6 +72,19 @@ void Agent::setMass(float _mass)
 	mass = _mass;
 }
 
+void Agent::addAgentStatus(AgentStatus newStatus)
+{
+	playerNeeds.gold		+= newStatus.gold;
+	playerNeeds.moneyInBank	+= newStatus.moneyInBank;
+	playerNeeds.rest		+= newStatus.rest;
+	playerNeeds.thirst		+= newStatus.thirst;
+
+}
+
+void Agent::changeState(stateEnum newState) {
+	//executar el Exit i el Enter
+}
+
 void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	color = { r, g, b, a };
@@ -112,6 +125,8 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event)
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
 
 	//PRACTICA3
+
+
 	currentState->Update(dtime, this);
 }
 
