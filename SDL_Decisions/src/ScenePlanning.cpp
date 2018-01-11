@@ -4,7 +4,7 @@ using namespace std;
 
 ScenePlanning::ScenePlanning()
 {
-	draw_grid = false;
+	draw_grid = true;
 
 	num_cell_x = SRC_WIDTH / CELL_SIZE;
 	num_cell_y = SRC_HEIGHT / CELL_SIZE;
@@ -17,12 +17,17 @@ ScenePlanning::ScenePlanning()
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 
+	draw_grid = true;
 
 	// set agent position coords to the center of a random cell
 	Vector2D rand_cell(-1,-1);
-	while (!isValidCell(rand_cell)) 
-		rand_cell = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
-	agents[0]->setPosition(cell2pix(rand_cell));
+	while (!isValidCell(rand_cell))
+		//rand_cell = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
+		//agents[0]->setPosition(cell2pix(rand_cell));
+
+/////////////////////////////////////////Agent comemça per centre//////////////////////////////////////////
+		rand_cell = states[0];
+		agents[0]->setPosition(cell2pix(rand_cell));
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
@@ -55,12 +60,36 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
+
+//////////////////////////////////PATHFINDING-ENTRE-STATES//////////////////////////////////////////////
+		
+		if (event->key.keysym.scancode == SDL_SCANCODE_Z) {
+			Vector2D cell = states[0];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_X) {
+			Vector2D cell = states[1];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_C) {
+			Vector2D cell = states[2];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_V) {
+			Vector2D cell = states[3];
+			path.points.push_back(cell2pix(cell));
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_B) {
+			Vector2D cell = states[4];
+			path.points.push_back(cell2pix(cell));
+		}
 		break;
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			
 			if (isValidCell(cell))
 			{
 				if (path.points.size() > 0)
@@ -68,6 +97,7 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 						break;
 
 				path.points.push_back(cell2pix(cell));
+
 			}
 		}
 		break;
@@ -147,6 +177,14 @@ void ScenePlanning::draw()
 
 	draw_circle(TheApp::Instance()->getRenderer(), (int)currentTarget.x, (int)currentTarget.y, 15, 255, 0, 0, 255);
 
+
+	///////////////////////////////////////////////////////////////////pintar states///////////////////////////////////////////////////////////////////////
+	for(int i=0;i<states.size();i++){
+		Vector2D cell = states[i];
+
+		draw_circle(TheApp::Instance()->getRenderer(), (int)cell2pix(cell).x, (int)cell2pix(cell).y, 15, 255, 0, 0, 255);
+
+	}
 	agents[0]->draw();
 }
 
