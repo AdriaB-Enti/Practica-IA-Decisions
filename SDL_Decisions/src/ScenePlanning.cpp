@@ -115,6 +115,8 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 	{
 		agents[0]->update(Vector2D(0,0), dtime, event);
 	}
+
+
 }
 
 void ScenePlanning::draw()

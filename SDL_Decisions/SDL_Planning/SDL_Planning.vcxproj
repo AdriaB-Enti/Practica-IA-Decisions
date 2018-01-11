@@ -138,7 +138,6 @@
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\State.cpp" />
     <ClCompile Include="..\src\SteeringBehavior.cpp" />
-    <ClCompile Include="..\src\Transition.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,7 +147,6 @@
     <ClInclude Include="..\src\ScenePlanning.h" />
     <ClInclude Include="..\src\State.h" />
     <ClInclude Include="..\src\SteeringBehavior.h" />
-    <ClInclude Include="..\src\Transition.h" />
     <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SDL_SimpleApp.h" />
