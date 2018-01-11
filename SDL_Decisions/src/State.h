@@ -13,6 +13,20 @@ public:
 	virtual void Exit(){}
 };
 
+class MineState : public State {
+public:
+	void Enter() {}
+	void Update(float deltaTime, Agent* agent);
+	void Exit() {}
+};
+
+class BankState : public State {
+public:
+	void Enter() {}
+	void Update(float deltaTime, Agent* agent);
+	void Exit() {}
+};
+
 class HomeState : public State {
 public:
 	void Enter(){}

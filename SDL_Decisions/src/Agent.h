@@ -9,8 +9,7 @@
 #include "SteeringBehavior.h"
 #include "State.h"
 
-struct Needs {
-	int maxGold; //quan de or pot portar a sobre
+struct AgentStatus {
 	int thirst;
 	int rest;
 	int gold;
@@ -42,7 +41,7 @@ private:
 	//PRACTICA3
 	HomeState hs;
 	State * currentState = &hs; //inicialitzem a home
-	Needs playerNeeds{ 50,0,100,0 };
+	AgentStatus playerNeeds{ 0,100,0 };
 
 public:
 	Agent();
@@ -60,5 +59,5 @@ public:
 	void update(Vector2D steering_force, float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
-	Needs GetPlayerNeeds();
+	AgentStatus GetPlayerNeeds();
 };

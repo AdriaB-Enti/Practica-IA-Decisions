@@ -160,6 +160,6 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 	return true;
 }
 
-Needs Agent::GetPlayerNeeds() {
+AgentStatus Agent::GetPlayerNeeds() {
 	return playerNeeds;
 }
