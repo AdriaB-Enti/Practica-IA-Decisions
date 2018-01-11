@@ -4,7 +4,7 @@ using namespace std;
 
 ScenePlanning::ScenePlanning()
 {
-	draw_grid = false;
+	draw_grid = true;
 
 	num_cell_x = SRC_WIDTH / CELL_SIZE;
 	num_cell_y = SRC_HEIGHT / CELL_SIZE;
@@ -152,6 +152,8 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 	{
 		agents[0]->update(Vector2D(0,0), dtime, event);
 	}
+
+
 }
 
 void ScenePlanning::draw()
