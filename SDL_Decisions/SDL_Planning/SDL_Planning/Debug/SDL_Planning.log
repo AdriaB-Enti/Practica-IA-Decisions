@@ -1,7 +1,2 @@
-﻿  ScenePlanning.cpp
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\sceneplanning.cpp(179): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
-  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
+﻿  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
   SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)

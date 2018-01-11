@@ -17,6 +17,7 @@ ScenePlanning::ScenePlanning()
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
 
+	draw_grid = true;
 
 	// set agent position coords to the center of a random cell
 	Vector2D rand_cell(-1,-1);
