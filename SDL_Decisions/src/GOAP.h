@@ -1,6 +1,9 @@
 #pragma once
 
 enum ourBoolean {isTrue, isFalse, dontCare};
+
+class Action;//així després no es queixa que "no existeix".
+
 class WorldState {
 public:
 	ourBoolean Agent_viu;
@@ -17,11 +20,11 @@ public:
 };
 
 
-
 class Action {
 	WorldState preCondition;
 	WorldState effect;
 	Action(WorldState wS1, WorldState wS2);
 	void Update(float deltaTime);
 };
+
 

@@ -1,7 +1,2 @@
-﻿  main.cpp
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.h(16): error C2061: error de sintaxis: identificador 'Action'
-  GOAP.cpp
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.h(16): error C2061: error de sintaxis: identificador 'Action'
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.cpp(22): error C2511: 'WorldState WorldState::ApplyAction(Action)': la función miembro sobrecargada no se ha encontrado en 'WorldState'
-  c:\enti\github\practica-ia-decisions\sdl_decisions\src\goap.h(4): note: vea la declaración de 'WorldState'
-  Generando código...
+﻿  GOAP.cpp
+  SDL_Planning.vcxproj -> C:\Users\Adria\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe

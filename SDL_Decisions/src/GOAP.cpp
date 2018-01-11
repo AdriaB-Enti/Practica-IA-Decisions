@@ -20,7 +20,7 @@ bool WorldState::EqualWorldState(WorldState wS1, WorldState wS2) {
 }
 
 WorldState WorldState::ApplyAction (Action a){
-
+	return WorldState();
 }
 
 
