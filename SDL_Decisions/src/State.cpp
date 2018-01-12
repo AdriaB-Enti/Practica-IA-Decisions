@@ -3,8 +3,8 @@
 #include "Agent.h"
 #include "ScenePlanning.h"
 
-#define MAXMONEYPOCKETS 100
-#define MAXMONEYBANK	200
+#define MAXMONEYPOCKETS 2
+#define MAXMONEYBANK	10
 #define MAXREST			80
 #define MAXTHIRST		80
 
@@ -14,15 +14,20 @@ float clamp(float toClamp, float maxi, float mini) {
 
 void MineState::Enter(Agent* agent) {
 	std::cout << "entering minestate\n";
+	agent->walking = true;
 	agent->currentStateEnum = agent->stateEnum::Mine;
 }
 
 void MineState::Update(float deltaTime, Agent* agent) {
 	//augmentar els diners en les butxaques, la set i el cansament
 	//if (agent->agentInPosition) {
-		agent->addAgentStatus(AgentStatus{ deltaTime * 10, deltaTime*(-5), deltaTime * 15, 0 });
+		//agent->addAgentStatus(AgentStatus{ deltaTime * 10, deltaTime*(-5), deltaTime * 15, 0 });
+
+	if (agent->walking == false)
+		agent->addAgentStatus(AgentStatus{ deltaTime * 10, deltaTime*(-5), 0, 0 });
 		if (agent->GetPlayerNeeds().gold > MAXMONEYPOCKETS)
 		{
+			
 			agent->printNeeds();
 			agent->changeState(Agent::stateEnum::Bank);
 		}
@@ -38,14 +43,18 @@ void MineState::Exit() {
 }
 
 void BankState::Enter(Agent* agent) {
+
 	std::cout << "Entering bankstate\n";
+	agent->walking = true;
 	agent->currentStateEnum = agent->stateEnum::Bank;
 }
 
 void BankState::Update(float deltaTime, Agent* agent) {
 	
 	//if (agent->agentInPosition) {
+	if(agent->walking==false)
 		agent->addAgentStatus(AgentStatus{ deltaTime * 10, deltaTime*(-5), deltaTime * (-20), deltaTime * 20 });
+			
 
 		//quan ja hem dipositat tots els diners al banc
 		if (agent->GetPlayerNeeds().gold <= 0) {
@@ -62,17 +71,23 @@ void BankState::Update(float deltaTime, Agent* agent) {
 
 void BankState::Exit() {
 	std::cout << "Quitting bankstate\n";
+
 }
 
 
 void HomeState::Enter(Agent* agent) {
 	std::cout << "Entering homestate\n";
+	agent->walking = true;
 	agent->currentStateEnum = agent->stateEnum::Home;
 }
 
 void HomeState::Update(float deltaTime, Agent* agent) {
 	//if (agent->agentInPosition) {
+
+	if (agent->walking == false) {
 		agent->addAgentStatus(AgentStatus{ deltaTime * 10, deltaTime*(15), 0, 0 });
+		cout << "sleeping" << endl;
+	}
 		if (agent->GetPlayerNeeds().rest > MAXREST)
 		{
 			agent->printNeeds();
@@ -88,12 +103,19 @@ void HomeState::Exit() {
 
 void SaloonState::Enter(Agent* agent) {
 	std::cout << "Entering saloonstate\n";
+	agent->walking = true;
 	agent->currentStateEnum = agent->stateEnum::Drink;
 }
 
 void SaloonState::Update(float deltaTime, Agent* agent) {
 	//if (agent->agentInPosition) {
+
+	if (agent->walking == false) {
 		agent->addAgentStatus(AgentStatus{ deltaTime * (-20), deltaTime*(-5), 0, 0 });
+		cout << "drinking" << endl;
+	}
+
+
 		if (agent->GetPlayerNeeds().thirst < 0)
 		{
 			agent->printNeeds();

@@ -37,7 +37,7 @@ ScenePlanning::ScenePlanning()
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
 	while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell) < 3)) {
-		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6 + rand() % 14));
+		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6 + rand() % 8));
 		states[1] = coinPosition;
 	}
 	
@@ -67,6 +67,7 @@ ScenePlanning::~ScenePlanning()
 
 void ScenePlanning::update(float dtime, SDL_Event *event)
 {
+	//agents[0]->printNeeds();
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
@@ -94,18 +95,25 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 					path.points.clear();
 					currentTargetIndex = -1;
 					agents[0]->setVelocity(Vector2D(0,0));
+					
+					agents[0]->walking = false;
+					
 					// if we have arrived to the coin, replace it ina random cell!
 					if (pix2cell(agents[0]->getPosition()) == coinPosition)
 					{
 						coinPosition = Vector2D(-1, -1);
 						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3)){
-							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6+rand() % 14));
+
+							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6+rand() % 8));
 							states[1] = coinPosition;
 							//path.points.push_back(cell2pix(coinPosition));
-							path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(coinPosition));
-
+							
 						}
 						
+						path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(coinPosition));
+
+						agents[0]->addAgentStatus(AgentStatus{ 0, 0, 1, 0 });
+
 					}
 				}
 				else
@@ -341,6 +349,7 @@ void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
 
 void ScenePlanning::isAgentInDestination(Agent * agent)
 {
+
 	switch (agent->currentStateEnum)
 	{
 	case Agent::Home:
