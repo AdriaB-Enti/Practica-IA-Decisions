@@ -15,24 +15,30 @@ public:
 class MineState : public State {
 public:
 	MineState(){};
-	void Enter(){}
+	void Enter();
 	void Update(float deltaTime, Agent* agent);
-	void Exit() {}
+	void Exit();
 };
 
 class BankState : public State {
 public:
 	BankState(){};
-	void Enter(){}
+	void Enter();
 	void Update(float deltaTime, Agent* agent);
-	void Exit() {}
+	void Exit();
 };
 
 class HomeState : public State {
 public:
-	HomeState(){};
-	void Enter(){}
+	HomeState() {};
+	void Enter();
 	void Update(float deltaTime, Agent* agent);
-	void Exit(){}
-	
+	void Exit();
+};
+class SaloonState : public State {
+public:
+	SaloonState() {};
+	void Enter();
+	void Update(float deltaTime, Agent* agent);
+	void Exit();
 };
