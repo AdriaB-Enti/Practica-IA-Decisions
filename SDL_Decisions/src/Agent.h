@@ -46,9 +46,10 @@ private:
 	MineState mineState		= MineState();
 	HomeState homeState		= HomeState();
 	BankState bankState		= BankState();
-	SaloonState saloonState	= SaloonState();
+	SaloonState saloonState = SaloonState();
+	StartState startState	= StartState();
 
-	State * currentState = &mineState; //inicialitzem a home
+	State * currentState = &startState; //inicialitzem a StartState
 	AgentStatus playerNeeds{ 0,100,0,0 };
 
 public:

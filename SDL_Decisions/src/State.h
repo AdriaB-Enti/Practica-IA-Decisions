@@ -42,3 +42,10 @@ public:
 	void Update(float deltaTime, Agent* agent);
 	void Exit();
 };
+class StartState : public State {
+public:
+	StartState() {};
+	void Enter() {};
+	void Update(float deltaTime, Agent* agent);
+	void Exit() {};
+};

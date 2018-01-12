@@ -96,3 +96,9 @@ void SaloonState::Update(float deltaTime, Agent* agent) {
 void SaloonState::Exit() {
 	std::cout << "Quitting saloonstate\n";
 }
+
+//l'únic que fa StartState és canviar a l'estat MineState
+void StartState::Update(float deltaTime, Agent * agent)
+{
+	agent->changeState(Agent::stateEnum::Mine);
+}

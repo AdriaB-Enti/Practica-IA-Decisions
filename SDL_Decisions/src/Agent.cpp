@@ -82,7 +82,6 @@ void Agent::addAgentStatus(AgentStatus newStatus)
 }
 
 void Agent::changeState(stateEnum newState) {
-	//executar el Exit i el Enter
 	currentState->Exit();
 	switch (newState)
 	{
