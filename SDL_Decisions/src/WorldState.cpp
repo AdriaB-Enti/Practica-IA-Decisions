@@ -15,13 +15,20 @@ WorldState::WorldState(ourBoolean agent_viu, ourBoolean agent_te_arma, ourBoolea
 	allVariables.push_back(enemic_alineat);
 	allVariables.push_back(enemic_aprop);
 }
-bool WorldState::operator==(WorldState otherState) {
+bool WorldState::GoalReached(WorldState goal) {
 	
 	for (int i = 0; i < allVariables.size(); i++) {
-		if (allVariables[i] != otherState.allVariables[i] && otherState.allVariables[i] != dontCare)
+		if (allVariables[i] != goal.allVariables[i] && goal.allVariables[i] != dontCare)
 			return false;
 	}
 	return true;	
+}
+bool WorldState::operator==(WorldState otherState) const {
+	for (int i = 0; i < allVariables.size(); i++) {
+		if (allVariables[i] != otherState.allVariables[i])
+			return false;
+	}
+	return true;
 }
 
 WorldState WorldState::operator+ (WorldState otherState) {
