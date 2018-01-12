@@ -280,6 +280,7 @@ bool SceneGOAP::isValidCell(Vector2D cell)
 	return !(terrain[(unsigned int)cell.x][(unsigned int)cell.y] == 0);
 }
 
+//PRACTICA
 struct WorldStateComparator
 {
 	bool operator()(const WorldState &left, const WorldState &right) const
@@ -291,6 +292,17 @@ struct WorldStateComparator
 		return false;
 	}
 };
+int GetValueInMap(map<WorldState, int, WorldStateComparator> m, WorldState key) {
+
+	map <WorldState, int>::iterator it = m.begin();
+	while (it != m.end())
+	{
+		if (it->first == key)
+			return it->second;			
+		it++;
+	}
+	return 0;
+}
 void SceneGOAP::GOAPlan() {
 
 	//DEFINIM TOTES LES ACCIONS
@@ -307,37 +319,40 @@ void SceneGOAP::GOAPlan() {
 	allPossibleActions.push_back(craftWeapon);
 
 	//Definim el primer estat en que nomes estàs viu i no tens res més
-	WorldState firstState(isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);
-	firstState.priority = 0;
-
-	//LA cua ordenara segons el valor prioritat de la classe worldState amb el priority comparision que hem fet
+	WorldState firstState(isTrue, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);//com que no l'hem tocat, la prioritat sera 0
+	
+	//La cua ordenara segons el valor prioritat de la classe worldState amb el PriorityComparision que hem fet
 	priority_queue<WorldState, vector<WorldState>, PriorityComparision> frontier;	
-	frontier.emplace(firstState);
-
-	//PROVES DE MAPS
+	frontier.emplace(firstState); 
+	
+	//Declarem els dos mapes utilitzant el nostre comparador que ens el demana per ordenar les claus
 	map<WorldState, WorldState, WorldStateComparator> came_from;
 
-	map <WorldState, int, WorldStateComparator> cost_so_far;
+	map <WorldState, int, WorldStateComparator> cost_so_far;	
 	cost_so_far[firstState] = 0;
 	int newCost;
 
 	WorldState current;
-
+	
 	//Proves mapa
-	/*WorldState prova(isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);	
+	/*
+	WorldState prova(isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);	
 	cost_so_far[prova] = 20; 
 
 	pair<WorldState, int> temp = make_pair(firstState, 15);
 	cost_so_far[firstState] = 15;//per canviar el valor amb la mateixa clau s'ha de fer aixi
-	*/
+	
+	int keyProva = GetValueInMap(cost_so_far, prova);
+	cout << keyProva << endl;
 
+	cout << "COST SO FAR ARRAY" << endl;
 	map <WorldState, int>::iterator it = cost_so_far.begin();
 	while (it != cost_so_far.end())
 	{
 		cout << it->second << endl;
 		it++;
 	}
-	
+	*/
 
 
 }

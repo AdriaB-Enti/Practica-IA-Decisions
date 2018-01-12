@@ -9,6 +9,8 @@
 #include "PriorityComparision.h"
 #include <map>
 
+
+
 class SceneGOAP :
 	public Scene
 {
@@ -41,4 +43,5 @@ private:
 
 	//PRACTICA
 	void GOAPlan();
+	
 };
