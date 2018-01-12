@@ -4,6 +4,7 @@ WorldState::WorldState() {
 	for (int i = 0; i < 8; i++) {
 		allVariables.push_back(dontCare);
 	}
+	id = -1;
 }
 WorldState::WorldState(ourBoolean agent_viu, ourBoolean agent_te_arma, ourBoolean arma_carregada, ourBoolean agent_te_bomba, ourBoolean enemic_visible, ourBoolean enemic_alineat, ourBoolean enemic_aprop, ourBoolean enemic_viu) {
 	allVariables.push_back(agent_viu);
@@ -12,8 +13,8 @@ WorldState::WorldState(ourBoolean agent_viu, ourBoolean agent_te_arma, ourBoolea
 	allVariables.push_back(agent_te_bomba);
 	allVariables.push_back(enemic_visible);
 	allVariables.push_back(enemic_alineat);
-	allVariables.push_back(enemic_alineat);
 	allVariables.push_back(enemic_aprop);
+	allVariables.push_back(enemic_viu);
 }
 bool WorldState::GoalReached(WorldState goal) {
 	
@@ -30,18 +31,24 @@ bool WorldState::operator==(WorldState otherState) const {
 	}
 	return true;
 }
-
-WorldState WorldState::operator+ (WorldState otherState) {
-	WorldState res;	
-
+bool WorldState::operator!=(WorldState otherState) const {
 	for (int i = 0; i < allVariables.size(); i++) {
-		if (otherState.allVariables[i] == isTrue)
-			res.allVariables.push_back(isTrue);
-		else if (otherState.allVariables[i] == isFalse)
-			res.allVariables.push_back(isFalse);
+		if (allVariables[i] != otherState.allVariables[i])
+			return true;
+	}
+	return false;
+}
+
+WorldState WorldState::ApplyAction (Action action) {
+	WorldState res;	
+	
+	for (int i = 0; i < action.effect.allVariables.size(); i++) {
+		if (action.effect.allVariables[i] == isTrue)
+			res.allVariables[i] = isTrue;
+		else if (action.effect.allVariables[i] == isFalse)
+			res.allVariables[i] = isFalse;
 		else
-			res.allVariables.push_back(allVariables[i]);
-			
+			res.allVariables[i] = allVariables[i];			
 	}	
 	
 	return res;
@@ -65,9 +72,28 @@ int WorldState::HeuristicTo(WorldState goal) {
 	return cost;
 }
 
-Action::Action(WorldState preCon, WorldState eff) {
+void WorldState::print() {
+	vector<string> valueNames = { "Player alive: ", "Has weapon: ", "Loaded weapon: ", "Has bomb: ", "Enemy in sight: ", "Enemy in line: ", "Enemy is close: ", "Enemy alive: " };
+	for (int i = 0; i < allVariables.size(); i++) {
+		cout << valueNames[i];
+		if (allVariables[i] == 0)
+			cout << "true,";
+		else if (allVariables[i] == 1)
+			cout << "false,";
+		else
+			cout << "don't care,";
+	}
+	cout << endl;
+}
+
+Action::Action(string _name, WorldState preCon, WorldState eff, int _cost) {
 	preCondition = preCon;
 	effect = eff;
+	cost = _cost;
+	name = _name;
+}
+void Action::printName() {
+	cout << "Player does action  : " << name << endl;
 }
 
 
