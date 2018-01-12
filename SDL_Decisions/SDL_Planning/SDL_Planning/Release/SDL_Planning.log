@@ -1,35 +1,7 @@
-﻿  Agent.cpp
-  Connection.cpp
-  Graph.cpp
-  SceneGOAP.cpp
-..\src\SceneGOAP.cpp(429): warning C4018: '<': no coinciden signed/unsigned
-  WorldState.cpp
-..\src\WorldState.cpp(21): warning C4018: '<': no coinciden signed/unsigned
-..\src\WorldState.cpp(28): warning C4018: '<': no coinciden signed/unsigned
-..\src\WorldState.cpp(35): warning C4018: '<': no coinciden signed/unsigned
-..\src\WorldState.cpp(45): warning C4018: '<': no coinciden signed/unsigned
-..\src\WorldState.cpp(59): warning C4018: '<': no coinciden signed/unsigned
-..\src\WorldState.cpp(68): warning C4018: '<': no coinciden signed/unsigned
-..\src\WorldState.cpp(77): warning C4018: '<': no coinciden signed/unsigned
-  main.cpp
-  ScenePlanning.cpp
-..\src\ScenePlanning.cpp(176): warning C4018: '<': no coinciden signed/unsigned
-..\src\ScenePlanning.cpp(391): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-..\src\ScenePlanning.cpp(394): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-..\src\ScenePlanning.cpp(398): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-..\src\ScenePlanning.cpp(402): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-..\src\ScenePlanning.cpp(406): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-  SDL_SimpleApp.cpp
-  State.cpp
-  SteeringBehavior.cpp
-  utils.cpp
+﻿  State.cpp
   Generando código
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\vector2d.h(91): warning C4715: 'Vector2D::operator<': no todas las rutas de acceso de control devuelven un valor
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\steeringbehavior.cpp(174): warning C4715: 'SteeringBehavior::ReturnMapValue': no todas las rutas de acceso de control devuelven un valor
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(319): warning C4715: 'GetValueInMap': no todas las rutas de acceso de control devuelven un valor
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(330): warning C4715: 'GetValueInMap': no todas las rutas de acceso de control devuelven un valor
-  1531 of 1542 functions (99.3%) were compiled, the rest were copied from previous compilation.
-    290 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  3 of 1542 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   SDL_Planning.vcxproj -> C:\ENTI\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe

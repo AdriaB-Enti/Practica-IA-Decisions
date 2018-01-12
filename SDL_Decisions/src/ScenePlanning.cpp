@@ -67,6 +67,7 @@ ScenePlanning::~ScenePlanning()
 
 void ScenePlanning::update(float dtime, SDL_Event *event)
 {
+	//cout << agents[0]->agentInPosition << endl;
 	//agents[0]->printNeeds();
 	/* Keyboard & Mouse events */
 	switch (event->type) {
@@ -111,8 +112,8 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 						}
 						
 						path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(coinPosition));
-
-						agents[0]->addAgentStatus(AgentStatus{ 0, 0, 1, 0 });
+						//Afegim or
+						agents[0]->addAgentStatus(AgentStatus{ 0, 0, 50, 0 });
 
 					}
 				}

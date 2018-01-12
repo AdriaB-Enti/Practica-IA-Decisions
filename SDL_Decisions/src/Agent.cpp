@@ -75,10 +75,12 @@ void Agent::setMass(float _mass)
 void Agent::addAgentStatus(AgentStatus newStatus)
 {
 	playerNeeds.gold		+= newStatus.gold;
-	playerNeeds.moneyInBank	+= newStatus.moneyInBank;
+	if (playerNeeds.gold < 0) playerNeeds.gold = 0;
+	playerNeeds.moneyInBank	+= newStatus.moneyInBank;	
 	playerNeeds.rest		+= newStatus.rest;
+	if (playerNeeds.rest < 0) playerNeeds.rest = 0;
 	playerNeeds.thirst		+= newStatus.thirst;
-
+	if (playerNeeds.thirst < 0) playerNeeds.thirst = 0;	
 }
 
 void Agent::changeState(stateEnum newState) {
