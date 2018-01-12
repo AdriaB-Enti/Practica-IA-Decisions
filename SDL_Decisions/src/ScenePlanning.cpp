@@ -354,13 +354,13 @@ void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
 		setPathTo(2);
 		break;
 	case Agent::Mine:
-		setPathTo(0);
+		setPathTo(1);//1 és de mine no 0
 		break;
 	case Agent::Drink:
 		setPathTo(4);
 		break;
 	case Agent::Nothing:
-		setPathTo(1);	//es podria treure si fes falta
+		setPathTo(0);	//es podria treure si fes falta
 		break;
 	default:
 		break;
