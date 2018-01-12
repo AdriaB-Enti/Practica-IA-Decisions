@@ -102,6 +102,7 @@ void Agent::changeState(stateEnum newState) {
 	}
 	currentState->Enter(this);
 	stateChanged = true;
+	agentInPosition = false;
 }
 
 void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)

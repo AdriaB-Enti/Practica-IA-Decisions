@@ -83,4 +83,5 @@ public:
 	AgentStatus GetPlayerNeeds();
 	void printNeeds();
 	void changeState(stateEnum newState);
+	bool agentInPosition = true;
 };

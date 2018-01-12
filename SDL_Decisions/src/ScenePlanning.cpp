@@ -2,6 +2,8 @@
 
 using namespace std;
 
+#define ARRIVEDISTANCE 90
+
 ScenePlanning::ScenePlanning()
 {
 	draw_grid = true;
@@ -21,7 +23,7 @@ ScenePlanning::ScenePlanning()
 
 	// set agent position coords to the center of a random cell
 	Vector2D rand_cell(-1,-1);
-	while (!isValidCell(rand_cell))
+	while (!isValidCell(rand_cell))				//--------------- això no hauria d'estar així, no se sap on comença i on acaba el bucle
 		//rand_cell = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
 		//agents[0]->setPosition(cell2pix(rand_cell));
 
@@ -159,6 +161,7 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 		setDestinationTo(agents[0]->currentStateEnum);
 		agents[0]->stateChanged = false;
 	}
+	isAgentInDestination(agents[0]);
 }
 
 void ScenePlanning::draw()
@@ -359,4 +362,38 @@ void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
 		break;
 	}
 
+}
+
+void ScenePlanning::isAgentInDestination(Agent * agent)
+{
+	switch (agent->currentStateEnum)
+	{
+	case Agent::Home:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[3]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Bank:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[2]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Mine:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[0]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Drink:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[4]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Nothing:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[1]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}//es podria treure si fes falta
+		break;
+	default:
+		break;
+	}
 }

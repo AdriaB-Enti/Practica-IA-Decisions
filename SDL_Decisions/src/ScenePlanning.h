@@ -42,4 +42,5 @@ private:
 	Vector2D money;
 	void setPathTo(short newDestination);
 	void setDestinationTo(Agent::stateEnum destination);
+	void isAgentInDestination(Agent* agent);
 };
