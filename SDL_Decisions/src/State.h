@@ -6,7 +6,6 @@
 class Agent;
 
 class State {
-	
 public:	
 	virtual void Enter(){}
 	virtual void Update(float deltaTime, Agent* agent){}
@@ -15,22 +14,38 @@ public:
 
 class MineState : public State {
 public:
-	void Enter() {}
+	MineState(){};
+	void Enter();
 	void Update(float deltaTime, Agent* agent);
-	void Exit() {}
+	void Exit();
 };
 
 class BankState : public State {
 public:
-	void Enter() {}
+	BankState(){};
+	void Enter();
 	void Update(float deltaTime, Agent* agent);
-	void Exit() {}
+	void Exit();
 };
 
 class HomeState : public State {
 public:
-	void Enter(){}
+	HomeState() {};
+	void Enter();
 	void Update(float deltaTime, Agent* agent);
-	void Exit(){}
-	
+	void Exit();
+};
+class SaloonState : public State {
+public:
+	SaloonState() {};
+	void Enter();
+	void Update(float deltaTime, Agent* agent);
+	void Exit();
+};
+class StartState : public State {
+public:
+	StartState() {};
+	void Enter() {};
+	void Update(float deltaTime, Agent* agent);
+	void Exit() {};
 };

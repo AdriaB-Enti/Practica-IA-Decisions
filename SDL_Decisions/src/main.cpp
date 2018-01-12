@@ -4,10 +4,9 @@
 
 #include "SDL_SimpleApp.h"
 #include "ScenePlanning.h"
+#include "SceneGOAP.h"
 
 #include "State.h"
-#include "Transition.h"
-#include "GOAP.h"
 
 #define FRAMES_PER_SEC 30
 
@@ -25,10 +24,6 @@ int main(int argc, char ** argv)
 {
 	//PROVEES
 	//PassPtr(prova);	
-	WorldState w1(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare);
-	WorldState w2(isFalse, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare);
-	bool prova = w1 == w2;
-	cout << prova << endl;
 	//ENDPROVEES
 
 	bool quit = false;
@@ -65,6 +60,9 @@ int main(int argc, char ** argv)
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_2)
 			{
+				delete(curr_scene);
+				curr_scene = new SceneGOAP;
+				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_3)
 			{

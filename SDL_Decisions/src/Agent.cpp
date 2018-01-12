@@ -72,6 +72,37 @@ void Agent::setMass(float _mass)
 	mass = _mass;
 }
 
+void Agent::addAgentStatus(AgentStatus newStatus)
+{
+	playerNeeds.gold		+= newStatus.gold;
+	playerNeeds.moneyInBank	+= newStatus.moneyInBank;
+	playerNeeds.rest		+= newStatus.rest;
+	playerNeeds.thirst		+= newStatus.thirst;
+
+}
+
+void Agent::changeState(stateEnum newState) {
+	currentState->Exit();
+	switch (newState)
+	{
+	case Agent::Home:
+		currentState = &homeState;
+		break;
+	case Agent::Bank:
+		currentState = &bankState;
+		break;
+	case Agent::Mine:
+		currentState = &mineState;
+		break;
+	case Agent::Drink:
+		currentState = &saloonState;
+		break;
+	default:
+		break;
+	}
+	currentState->Enter();
+}
+
 void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	color = { r, g, b, a };
@@ -79,7 +110,6 @@ void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 
 void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event)
 {
-
 	//cout << "agent update:" << endl;
 
 	switch (event->type) {
@@ -112,6 +142,7 @@ void Agent::update(Vector2D steering_force, float dtime, SDL_Event *event)
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
 
 	//PRACTICA3
+
 	currentState->Update(dtime, this);
 }
 
@@ -162,4 +193,9 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 
 AgentStatus Agent::GetPlayerNeeds() {
 	return playerNeeds;
+}
+
+void Agent::printNeeds()
+{
+	std::cout << "Thirst:" << playerNeeds.thirst << "Rest:" << playerNeeds.rest << " Gold:" << playerNeeds.gold << "Bank:" << playerNeeds.moneyInBank << std::endl;
 }
