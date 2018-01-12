@@ -9,7 +9,10 @@ ScenePlanning::ScenePlanning()
 	draw_grid = true;
 
 	num_cell_x = SRC_WIDTH / CELL_SIZE;
-	num_cell_y = SRC_HEIGHT / CELL_SIZE;
+	
+	//num_cell_y = SRC_HEIGHT / CELL_SIZE;
+	num_cell_y =14;
+	
 	initMaze();
 	loadTextures("../res/maze.png", "../res/coin.png");
 
@@ -34,7 +37,8 @@ ScenePlanning::ScenePlanning()
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
 	while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell)<3)) 
-		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
+		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6 + rand() % num_cell_y));
+	states[1] = coinPosition;
 	
 	// PathFollowing next Target
 	currentTarget = Vector2D(0, 0);
@@ -93,7 +97,7 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			
+			cout << cell.x << "   " << cell.y << endl;
 			if (isValidCell(cell))
 			{
 				if (path.points.size() > 0)
@@ -132,8 +136,8 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 					{
 						coinPosition = Vector2D(-1, -1);
 						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3))
-							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
-
+							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6+rand() % num_cell_y));
+							states[1] = coinPosition;
 						path.points.push_back(cell2pix(coinPosition));
 					}
 				}
@@ -350,13 +354,13 @@ void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
 		setPathTo(2);
 		break;
 	case Agent::Mine:
-		setPathTo(0);
+		setPathTo(1);//1 és de mine no 0
 		break;
 	case Agent::Drink:
 		setPathTo(4);
 		break;
 	case Agent::Nothing:
-		setPathTo(1);	//es podria treure si fes falta
+		setPathTo(0);	//es podria treure si fes falta
 		break;
 	default:
 		break;
