@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include "Agent.h"
 #include "Path.h"
+#include "Graph.h"
+
 
 class ScenePlanning :
 	public Scene
@@ -43,4 +45,8 @@ private:
 	void setPathTo(short newDestination);
 	void setDestinationTo(Agent::stateEnum destination);
 	void isAgentInDestination(Agent* agent);
+
+	void createGraph();
+	Graph graph;
+
 };
