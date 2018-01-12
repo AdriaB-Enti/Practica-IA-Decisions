@@ -43,10 +43,13 @@ private:
 	//PRACTICA3
 
 	//Aquí posem tots els Estats
-	HomeState homeState = HomeState();
-	BankState bankState = BankState();
+	MineState mineState		= MineState();
+	HomeState homeState		= HomeState();
+	BankState bankState		= BankState();
+	SaloonState saloonState = SaloonState();
+	StartState startState	= StartState();
 
-	State * currentState = &homeState; //inicialitzem a home
+	State * currentState = &startState; //inicialitzem a StartState
 	AgentStatus playerNeeds{ 0,100,0,0 };
 
 public:
@@ -74,5 +77,6 @@ public:
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	AgentStatus GetPlayerNeeds();
+	void printNeeds();
 	void changeState(stateEnum newState);
 };
