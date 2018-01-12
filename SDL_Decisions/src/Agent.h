@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "SteeringBehavior.h"
 #include "State.h"
+#include "Path.h"
 
 struct AgentStatus {
 	float thirst;		//set -> quan és 0 no té set
@@ -49,7 +50,7 @@ private:
 	SaloonState saloonState = SaloonState();
 	StartState startState	= StartState();
 
-	State * currentState = &startState; //inicialitzem a StartState
+	State * currentState	= &startState; //inicialitzem a StartState
 	AgentStatus playerNeeds{ 0,100,0,0 };
 
 public:
@@ -58,11 +59,14 @@ public:
 		Home,
 		Bank,
 		Mine,
-		Drink
+		Drink,
+		Nothing
 	};
-	~Agent();
-	SteeringBehavior *Behavior();
 	Agent();
+	~Agent();
+	stateEnum currentStateEnum = stateEnum::Nothing;		//Radev envia records -- Serveix per dirli al scenePlanning a on ha de fer el pathfindig
+	bool stateChanged = false;
+	SteeringBehavior *Behavior();
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();

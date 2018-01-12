@@ -39,6 +39,7 @@ ScenePlanning::ScenePlanning()
 	currentTargetIndex = -1;
 
 	path.points.push_back(cell2pix(coinPosition));
+
 }
 
 ScenePlanning::~ScenePlanning()
@@ -153,7 +154,11 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 		agents[0]->update(Vector2D(0,0), dtime, event);
 	}
 
-
+	if (agents[0]->stateChanged)
+	{
+		setDestinationTo(agents[0]->currentStateEnum);
+		agents[0]->stateChanged = false;
+	}
 }
 
 void ScenePlanning::draw()
@@ -323,4 +328,35 @@ bool ScenePlanning::isValidCell(Vector2D cell)
 	if ((cell.x < 0) || (cell.y < 0) || (cell.x >= terrain.size()) || (cell.y >= terrain[0].size()) )
 		return false;
 	return !(terrain[(unsigned int)cell.x][(unsigned int)cell.y] == 0);
+}
+
+void ScenePlanning::setPathTo(short newDestination)
+{
+	Vector2D cell = states[newDestination];
+	path.points.push_back(cell2pix(cell));
+}
+
+void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
+
+	switch (destination)
+	{
+	case Agent::Home:
+		setPathTo(3);
+		break;
+	case Agent::Bank:
+		setPathTo(2);
+		break;
+	case Agent::Mine:
+		setPathTo(0);
+		break;
+	case Agent::Drink:
+		setPathTo(4);
+		break;
+	case Agent::Nothing:
+		setPathTo(1);	//es podria treure si fes falta
+		break;
+	default:
+		break;
+	}
+
 }

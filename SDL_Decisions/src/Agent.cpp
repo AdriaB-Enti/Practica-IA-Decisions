@@ -100,7 +100,8 @@ void Agent::changeState(stateEnum newState) {
 	default:
 		break;
 	}
-	currentState->Enter();
+	currentState->Enter(this);
+	stateChanged = true;
 }
 
 void Agent::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
@@ -197,5 +198,5 @@ AgentStatus Agent::GetPlayerNeeds() {
 
 void Agent::printNeeds()
 {
-	std::cout << "Thirst:" << playerNeeds.thirst << "Rest:" << playerNeeds.rest << " Gold:" << playerNeeds.gold << "Bank:" << playerNeeds.moneyInBank << std::endl;
+	std::cout << "->Thirst:" << playerNeeds.thirst << "Rest:" << playerNeeds.rest << " Gold:" << playerNeeds.gold << "Bank:" << playerNeeds.moneyInBank << std::endl;
 }

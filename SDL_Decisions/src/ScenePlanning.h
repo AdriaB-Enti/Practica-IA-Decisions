@@ -40,4 +40,6 @@ private:
 	//	[2]	[3]	[4]
 	std::vector <Vector2D> states = {Vector2D(19,3),Vector2D(19,10),Vector2D(6,19),Vector2D(19,19),Vector2D(33,19) };
 	Vector2D money;
+	void setPathTo(short newDestination);
+	void setDestinationTo(Agent::stateEnum destination);
 };

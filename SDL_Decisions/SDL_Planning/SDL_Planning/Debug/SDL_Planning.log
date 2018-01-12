@@ -1,12 +1,1 @@
-﻿  Agent.cpp
-  Generando código...
-  Compilando...
-  SteeringBehavior.cpp
-  ScenePlanning.cpp
-c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\sceneplanning.cpp(189): warning C4018: '<': no coinciden signed/unsigned
-  SceneGOAP.cpp
-  Generando código...
-  Omitiendo... (no se detectaron cambios relevantes)
-  main.cpp
-  State.cpp
-  SDL_Planning.vcxproj -> C:\Users\Adria\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
+﻿  SDL_Planning.vcxproj -> C:\Users\Adria\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe

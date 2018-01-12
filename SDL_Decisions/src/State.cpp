@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "Agent.h"
+#include "ScenePlanning.h"
 
 #define MAXMONEYPOCKETS 100
 #define MAXMONEYBANK	200
@@ -11,8 +12,9 @@ float clamp(float toClamp, float maxi, float mini) {
 	return max(mini, min(toClamp, maxi));
 }
 
-void MineState::Enter() {
+void MineState::Enter(Agent* agent) {
 	std::cout << "entering minestate\n";
+	agent->currentStateEnum = agent->stateEnum::Mine;
 }
 
 void MineState::Update(float deltaTime, Agent* agent) {
@@ -34,9 +36,9 @@ void MineState::Exit() {
 	std::cout << "Quitting minestate\n";
 }
 
-void BankState::Enter() {
+void BankState::Enter(Agent* agent) {
 	std::cout << "Entering bankstate\n";
-
+	agent->currentStateEnum = agent->stateEnum::Bank;
 }
 
 void BankState::Update(float deltaTime, Agent* agent) {
@@ -60,9 +62,9 @@ void BankState::Exit() {
 }
 
 
-void HomeState::Enter() {
+void HomeState::Enter(Agent* agent) {
 	std::cout << "Entering homestate\n";
-
+	agent->currentStateEnum = agent->stateEnum::Home;
 }
 
 void HomeState::Update(float deltaTime, Agent* agent) {
@@ -79,9 +81,9 @@ void HomeState::Exit() {
 }
 
 
-void SaloonState::Enter() {
+void SaloonState::Enter(Agent* agent) {
 	std::cout << "Entering saloonstate\n";
-
+	agent->currentStateEnum = agent->stateEnum::Drink;
 }
 
 void SaloonState::Update(float deltaTime, Agent* agent) {
