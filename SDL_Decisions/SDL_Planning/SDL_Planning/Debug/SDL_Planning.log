@@ -1,1 +1,19 @@
-﻿  SDL_Planning.vcxproj -> C:\Users\Adria\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
+﻿  utils.cpp
+  main.cpp
+  WorldState.cpp
+c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(20): warning C4018: '<': no coinciden signed/unsigned
+c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(27): warning C4018: '<': no coinciden signed/unsigned
+c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(37): warning C4018: '<': no coinciden signed/unsigned
+c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(52): warning C4018: '<': no coinciden signed/unsigned
+c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(61): warning C4018: '<': no coinciden signed/unsigned
+  SteeringBehavior.cpp
+  State.cpp
+  ScenePlanning.cpp
+c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\sceneplanning.cpp(201): warning C4018: '<': no coinciden signed/unsigned
+  SceneGOAP.cpp
+c:\users\adria\documents\github\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(333): warning C4101: 'newCost': variable local sin referencia
+  SDL_SimpleApp.cpp
+  Agent.cpp
+  Generando código...
+  LINK : no se encontró C:\Users\Adria\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  SDL_Planning.vcxproj -> C:\Users\Adria\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
