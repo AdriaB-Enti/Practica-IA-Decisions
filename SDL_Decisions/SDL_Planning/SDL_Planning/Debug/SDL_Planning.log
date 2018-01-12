@@ -1,6 +1,2 @@
-﻿  SceneGOAP.cpp
-c:\users\pblanes\ia\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(429): warning C4018: '<': signed/unsigned mismatch
-c:\users\pblanes\ia\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(319): warning C4715: 'GetValueInMap': not all control paths return a value
-c:\users\pblanes\ia\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(330): warning C4715: 'GetValueInMap': not all control paths return a value
-  SDL_Planning.vcxproj -> C:\Users\pblanes\IA\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
-  SDL_Planning.vcxproj -> C:\Users\pblanes\IA\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)
+﻿  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
+  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)

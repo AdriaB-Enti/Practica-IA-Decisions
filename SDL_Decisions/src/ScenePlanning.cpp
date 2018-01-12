@@ -2,12 +2,17 @@
 
 using namespace std;
 
+#define ARRIVEDISTANCE 90
+
 ScenePlanning::ScenePlanning()
 {
 	draw_grid = true;
 
 	num_cell_x = SRC_WIDTH / CELL_SIZE;
+	
 	num_cell_y = SRC_HEIGHT / CELL_SIZE;
+	//num_cell_y =14;
+	
 	initMaze();
 	loadTextures("../res/maze.png", "../res/coin.png");
 
@@ -21,24 +26,30 @@ ScenePlanning::ScenePlanning()
 
 	// set agent position coords to the center of a random cell
 	Vector2D rand_cell(-1,-1);
-	while (!isValidCell(rand_cell))
+	while (!isValidCell(rand_cell))				//--------------- això no hauria d'estar així, no se sap on comença i on acaba el bucle
 		//rand_cell = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
 		//agents[0]->setPosition(cell2pix(rand_cell));
 
-/////////////////////////////////////////Agent comemça per centre//////////////////////////////////////////
+/////////////////////////////////////////Agent comemça per adalt//////////////////////////////////////////
 		rand_cell = states[0];
 		agents[0]->setPosition(cell2pix(rand_cell));
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
-	while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell)<3)) 
-		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
+	while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell) < 3)) {
+		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6 + rand() % 14));
+		states[1] = coinPosition;
+	}
 	
 	// PathFollowing next Target
 	currentTarget = Vector2D(0, 0);
 	currentTargetIndex = -1;
 
-	path.points.push_back(cell2pix(coinPosition));
+	createGraph();
+
+	//path.points.push_back(cell2pix(coinPosition));
+	path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(coinPosition));
+
 }
 
 ScenePlanning::~ScenePlanning()
@@ -61,52 +72,11 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
-
-//////////////////////////////////PATHFINDING-ENTRE-STATES//////////////////////////////////////////////
-		
-		if (event->key.keysym.scancode == SDL_SCANCODE_Z) {
-			Vector2D cell = states[0];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_X) {
-			Vector2D cell = states[1];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_C) {
-			Vector2D cell = states[2];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_V) {
-			Vector2D cell = states[3];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_B) {
-			Vector2D cell = states[4];
-			path.points.push_back(cell2pix(cell));
-		}
-		break;
-	case SDL_MOUSEMOTION:
-	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
-			Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			
-			if (isValidCell(cell))
-			{
-				if (path.points.size() > 0)
-					if (path.points[path.points.size() - 1] == cell2pix(cell))
-						break;
-
-				path.points.push_back(cell2pix(cell));
-
-			}
-		}
 		break;
 	default:
 		break;
 	}
 
-//	
 	
 	if ((currentTargetIndex == -1) && (path.points.size()>0))
 		currentTargetIndex = 0;
@@ -128,10 +98,14 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 					if (pix2cell(agents[0]->getPosition()) == coinPosition)
 					{
 						coinPosition = Vector2D(-1, -1);
-						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3))
-							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
+						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3)){
+							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6+rand() % 14));
+							states[1] = coinPosition;
+							//path.points.push_back(cell2pix(coinPosition));
+							path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(coinPosition));
 
-						path.points.push_back(cell2pix(coinPosition));
+						}
+						
 					}
 				}
 				else
@@ -153,7 +127,12 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 		agents[0]->update(Vector2D(0,0), dtime, event);
 	}
 
-
+	if (agents[0]->stateChanged)
+	{
+		setDestinationTo(agents[0]->currentStateEnum);
+		agents[0]->stateChanged = false;
+	}
+	isAgentInDestination(agents[0]);
 }
 
 void ScenePlanning::draw()
@@ -192,6 +171,7 @@ void ScenePlanning::draw()
 		draw_circle(TheApp::Instance()->getRenderer(), (int)cell2pix(cell).x, (int)cell2pix(cell).y, 15, 255, 0, 0, 255);
 
 	}
+
 	agents[0]->draw();
 }
 
@@ -323,4 +303,103 @@ bool ScenePlanning::isValidCell(Vector2D cell)
 	if ((cell.x < 0) || (cell.y < 0) || (cell.x >= terrain.size()) || (cell.y >= terrain[0].size()) )
 		return false;
 	return !(terrain[(unsigned int)cell.x][(unsigned int)cell.y] == 0);
+}
+
+void ScenePlanning::setPathTo(short newDestination)
+{
+	Vector2D cell = states[newDestination];
+	//path.points.push_back(cell2pix(cell));
+
+	path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(cell));
+
+}
+
+void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
+
+	switch (destination)
+	{
+	case Agent::Home:
+		setPathTo(3);
+		break;
+	case Agent::Bank:
+		setPathTo(2);
+		break;
+	case Agent::Mine:
+		setPathTo(1);//1 és de mine no 0
+		break;
+	case Agent::Drink:
+		setPathTo(4);
+		break;
+	case Agent::Nothing:
+		setPathTo(0);	//es podria treure si fes falta
+		break;
+	default:
+		break;
+	}
+
+}
+
+void ScenePlanning::isAgentInDestination(Agent * agent)
+{
+	switch (agent->currentStateEnum)
+	{
+	case Agent::Home:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[3]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Bank:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[2]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Mine:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[0]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Drink:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[4]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}
+		break;
+	case Agent::Nothing:
+		if (Vector2D::Distance(agents[0]->getPosition(), states[1]) < ARRIVEDISTANCE) {
+			agent->agentInPosition = true;
+		}//es podria treure si fes falta
+		break;
+	default:
+		break;
+	}
+}
+
+void ScenePlanning::createGraph() {
+
+	for (int i = 0; i < num_cell_x; i++) {
+		for (int j = 0; j < num_cell_y; j++) {
+
+			if (terrain[i][j] != 0) { //si no estem en un mur
+				Vector2D fromcell(i, j);
+				Vector2D toCell;
+
+				toCell.x = i; toCell.y = j + 1;
+				if (isValidCell(toCell) && terrain[i][j + 1] != 0) { // si no ens hem sortit del grid ni estem en un mur
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				toCell.x = i; toCell.y = j - 1;
+				if (isValidCell(toCell) && terrain[i][j - 1] != 0) {
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				toCell.x = i + 1; toCell.y = j;
+				if (isValidCell(toCell) && terrain[i + 1][j] != 0) {
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				toCell.x = i - 1; toCell.y = j;
+				if (isValidCell(toCell) && terrain[i - 1][j] != 0) {
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				
+			}
+		}
+	}
 }
