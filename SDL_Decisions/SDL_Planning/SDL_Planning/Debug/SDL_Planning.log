@@ -1,19 +1,2 @@
-﻿  utils.cpp
-  SteeringBehavior.cpp
-  State.cpp
-  SDL_SimpleApp.cpp
-  ScenePlanning.cpp
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\sceneplanning.cpp(193): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-  WorldState.cpp
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(20): warning C4018: '<': signed/unsigned mismatch
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(27): warning C4018: '<': signed/unsigned mismatch
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(37): warning C4018: '<': signed/unsigned mismatch
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(52): warning C4018: '<': signed/unsigned mismatch
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\worldstate.cpp(61): warning C4018: '<': signed/unsigned mismatch
-  SceneGOAP.cpp
-c:\users\bzheng\documents\github\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(333): warning C4101: 'newCost': unreferenced local variable
-  Agent.cpp
-  Generating Code...
-  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
-  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)
+﻿  State.cpp
+  SDL_Planning.vcxproj -> C:\Users\Adria\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
