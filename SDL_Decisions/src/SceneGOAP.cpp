@@ -33,6 +33,8 @@ SceneGOAP::SceneGOAP()
 	currentTarget = Vector2D(0, 0);
 	currentTargetIndex = -1;
 
+	GOAPlan();
+
 }
 
 SceneGOAP::~SceneGOAP()
@@ -51,7 +53,7 @@ SceneGOAP::~SceneGOAP()
 void SceneGOAP::update(float dtime, SDL_Event *event)
 {
 	/* Keyboard & Mouse events */
-	switch (event->type) {
+	/*switch (event->type) {
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
@@ -114,7 +116,7 @@ void SceneGOAP::update(float dtime, SDL_Event *event)
 	else
 	{
 		agents[0]->update(Vector2D(0, 0), dtime, event);
-	}
+	}*/
 }
 
 void SceneGOAP::draw()
@@ -276,4 +278,66 @@ bool SceneGOAP::isValidCell(Vector2D cell)
 	if ((cell.x < 0) || (cell.y < 0) || (cell.x >= terrain.size()) || (cell.y >= terrain[0].size()))
 		return false;
 	return !(terrain[(unsigned int)cell.x][(unsigned int)cell.y] == 0);
+}
+
+struct WorldStateComparator
+{
+	bool operator()(const WorldState &left, const WorldState &right) const
+	{
+		for (int i = 0; i < 8; i++) {
+			if (left.allVariables[i] < right.allVariables[i])
+				return true;
+		}
+		return false;
+	}
+};
+void SceneGOAP::GOAPlan() {
+
+	//DEFINIM TOTES LES ACCIONS
+	//scout necesita : player viu -> enemic a la vista
+	Action scout(WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare));
+	//searchWeapon necessita : player viu -> té arma
+	Action searchWeapon(WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare));
+	//craftBomb necessita : player viu -> té bomba
+	Action craftWeapon(WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare, dontCare));
+
+	vector <Action> allPossibleActions;
+	allPossibleActions.push_back(scout);
+	allPossibleActions.push_back(searchWeapon);
+	allPossibleActions.push_back(craftWeapon);
+
+	//Definim el primer estat en que nomes estàs viu i no tens res més
+	WorldState firstState(isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);
+	firstState.priority = 0;
+
+	//LA cua ordenara segons el valor prioritat de la classe worldState amb el priority comparision que hem fet
+	priority_queue<WorldState, vector<WorldState>, PriorityComparision> frontier;	
+	frontier.emplace(firstState);
+
+	//PROVES DE MAPS
+	map<WorldState, WorldState, WorldStateComparator> came_from;
+
+	map <WorldState, int, WorldStateComparator> cost_so_far;
+	cost_so_far[firstState] = 0;
+	int newCost;
+
+	WorldState current;
+
+	//Proves mapa
+	/*WorldState prova(isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);	
+	cost_so_far[prova] = 20; 
+
+	pair<WorldState, int> temp = make_pair(firstState, 15);
+	cost_so_far[firstState] = 15;//per canviar el valor amb la mateixa clau s'ha de fer aixi
+	*/
+
+	map <WorldState, int>::iterator it = cost_so_far.begin();
+	while (it != cost_so_far.end())
+	{
+		cout << it->second << endl;
+		it++;
+	}
+	
+
+
 }

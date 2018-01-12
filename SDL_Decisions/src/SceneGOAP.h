@@ -4,6 +4,10 @@
 #include "Scene.h"
 #include "Agent.h"
 #include "Path.h"
+#include "WorldState.h"
+#include <queue>
+#include "PriorityComparision.h"
+#include <map>
 
 class SceneGOAP :
 	public Scene
@@ -36,6 +40,5 @@ private:
 	bool isValidCell(Vector2D cell);
 
 	//PRACTICA
-
-
+	void GOAPlan();
 };

@@ -15,4 +15,7 @@ public:
 	Vector2D Seek(Agent *agent, Agent *target, float dtime);
 	Vector2D Arrive(Agent *agent, Vector2D target, int slow_radius, float dtime);
 	Vector2D Arrive(Agent *agent, Agent *target, int slow_radius, float dtime);
+
+
+
 };
