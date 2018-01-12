@@ -1,4 +1,2 @@
-﻿  SceneGOAP.cpp
-c:\enti\github\practica-ia-decisions\sdl_decisions\src\scenegoap.cpp(341): warning C4101: 'newCost': variable local sin referencia
-  SDL_Planning.vcxproj -> C:\ENTI\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
-  SDL_Planning.vcxproj -> C:\ENTI\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)
+﻿  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.exe
+  SDL_Planning.vcxproj -> C:\Users\bzheng\Documents\GitHub\Practica-IA-Decisions\SDL_Decisions\\bin\SDL_Planning.pdb (Partial PDB)
