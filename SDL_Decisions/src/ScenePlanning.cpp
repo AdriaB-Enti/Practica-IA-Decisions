@@ -10,8 +10,8 @@ ScenePlanning::ScenePlanning()
 
 	num_cell_x = SRC_WIDTH / CELL_SIZE;
 	
-	//num_cell_y = SRC_HEIGHT / CELL_SIZE;
-	num_cell_y =14;
+	num_cell_y = SRC_HEIGHT / CELL_SIZE;
+	//num_cell_y =14;
 	
 	initMaze();
 	loadTextures("../res/maze.png", "../res/coin.png");
@@ -30,21 +30,25 @@ ScenePlanning::ScenePlanning()
 		//rand_cell = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
 		//agents[0]->setPosition(cell2pix(rand_cell));
 
-/////////////////////////////////////////Agent comemça per centre//////////////////////////////////////////
+/////////////////////////////////////////Agent comemça per adalt//////////////////////////////////////////
 		rand_cell = states[0];
 		agents[0]->setPosition(cell2pix(rand_cell));
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
-	while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell)<3)) 
-		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6 + rand() % num_cell_y));
-	states[1] = coinPosition;
+	while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell) < 3)) {
+		coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6 + rand() % 8));
+		states[1] = coinPosition;
+	}
 	
 	// PathFollowing next Target
 	currentTarget = Vector2D(0, 0);
 	currentTargetIndex = -1;
 
-	path.points.push_back(cell2pix(coinPosition));
+	createGraph();
+
+	//path.points.push_back(cell2pix(coinPosition));
+	path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(coinPosition));
 
 }
 
@@ -63,57 +67,18 @@ ScenePlanning::~ScenePlanning()
 
 void ScenePlanning::update(float dtime, SDL_Event *event)
 {
+	//cout << agents[0]->agentInPosition << endl;
+	//agents[0]->printNeeds();
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
-
-//////////////////////////////////PATHFINDING-ENTRE-STATES//////////////////////////////////////////////
-		
-		if (event->key.keysym.scancode == SDL_SCANCODE_Z) {
-			Vector2D cell = states[0];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_X) {
-			Vector2D cell = states[1];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_C) {
-			Vector2D cell = states[2];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_V) {
-			Vector2D cell = states[3];
-			path.points.push_back(cell2pix(cell));
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_B) {
-			Vector2D cell = states[4];
-			path.points.push_back(cell2pix(cell));
-		}
-		break;
-	case SDL_MOUSEMOTION:
-	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
-			Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			cout << cell.x << "   " << cell.y << endl;
-			if (isValidCell(cell))
-			{
-				if (path.points.size() > 0)
-					if (path.points[path.points.size() - 1] == cell2pix(cell))
-						break;
-
-				path.points.push_back(cell2pix(cell));
-
-			}
-		}
 		break;
 	default:
 		break;
 	}
 
-//	
 	
 	if ((currentTargetIndex == -1) && (path.points.size()>0))
 		currentTargetIndex = 0;
@@ -131,14 +96,25 @@ void ScenePlanning::update(float dtime, SDL_Event *event)
 					path.points.clear();
 					currentTargetIndex = -1;
 					agents[0]->setVelocity(Vector2D(0,0));
+					
+					agents[0]->walking = false;
+					
 					// if we have arrived to the coin, replace it ina random cell!
 					if (pix2cell(agents[0]->getPosition()) == coinPosition)
 					{
 						coinPosition = Vector2D(-1, -1);
-						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3))
-							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6+rand() % num_cell_y));
+						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3)){
+
+							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(6+rand() % 8));
 							states[1] = coinPosition;
-						path.points.push_back(cell2pix(coinPosition));
+							//path.points.push_back(cell2pix(coinPosition));
+							
+						}
+						
+						path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(coinPosition));
+						//Afegim or
+						agents[0]->addAgentStatus(AgentStatus{ 0, 0, 50, 0 });
+
 					}
 				}
 				else
@@ -204,6 +180,7 @@ void ScenePlanning::draw()
 		draw_circle(TheApp::Instance()->getRenderer(), (int)cell2pix(cell).x, (int)cell2pix(cell).y, 15, 255, 0, 0, 255);
 
 	}
+
 	agents[0]->draw();
 }
 
@@ -340,7 +317,10 @@ bool ScenePlanning::isValidCell(Vector2D cell)
 void ScenePlanning::setPathTo(short newDestination)
 {
 	Vector2D cell = states[newDestination];
-	path.points.push_back(cell2pix(cell));
+	//path.points.push_back(cell2pix(cell));
+
+	path.points = agents[0]->Behavior()->SceneGreedyBFS(graph, cell2pix(pix2cell(agents[0]->getPosition())), cell2pix(cell));
+
 }
 
 void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
@@ -370,6 +350,7 @@ void ScenePlanning::setDestinationTo(Agent::stateEnum destination) {
 
 void ScenePlanning::isAgentInDestination(Agent * agent)
 {
+
 	switch (agent->currentStateEnum)
 	{
 	case Agent::Home:
@@ -399,5 +380,36 @@ void ScenePlanning::isAgentInDestination(Agent * agent)
 		break;
 	default:
 		break;
+	}
+}
+
+void ScenePlanning::createGraph() {
+
+	for (int i = 0; i < num_cell_x; i++) {
+		for (int j = 0; j < num_cell_y; j++) {
+
+			if (terrain[i][j] != 0) { //si no estem en un mur
+				Vector2D fromcell(i, j);
+				Vector2D toCell;
+
+				toCell.x = i; toCell.y = j + 1;
+				if (isValidCell(toCell) && terrain[i][j + 1] != 0) { // si no ens hem sortit del grid ni estem en un mur
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				toCell.x = i; toCell.y = j - 1;
+				if (isValidCell(toCell) && terrain[i][j - 1] != 0) {
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				toCell.x = i + 1; toCell.y = j;
+				if (isValidCell(toCell) && terrain[i + 1][j] != 0) {
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				toCell.x = i - 1; toCell.y = j;
+				if (isValidCell(toCell) && terrain[i - 1][j] != 0) {
+					graph.AddConnection(cell2pix(fromcell), cell2pix(toCell), 1);
+				}
+				
+			}
+		}
 	}
 }

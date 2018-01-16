@@ -285,11 +285,14 @@ struct WorldStateComparator
 {
 	bool operator()(const WorldState &left, const WorldState &right) const
 	{
-		for (int i = 0; i < 8; i++) {
-			if (left.allVariables[i] < right.allVariables[i])
+		/*for (int i = 0; i < 8; i++) {
+			
+			if ( left.allVariables[0] < right.allVariables[0])
 				return true;
 		}
-		return false;
+			
+		return false;*/
+		return (left.id < right.id);
 	}
 };
 int GetValueInMap(map<WorldState, int, WorldStateComparator> m, WorldState key) {
@@ -303,30 +306,96 @@ int GetValueInMap(map<WorldState, int, WorldStateComparator> m, WorldState key) 
 	}
 	return 0;
 }
+WorldState GetValueInMap(map<WorldState, WorldState, WorldStateComparator> m, WorldState key) {
+
+	map <WorldState, WorldState>::iterator it = m.begin();
+	while (it != m.end())
+	{
+		if (it->first == key)
+			return it->second;
+		it++;
+	}
+	
+}
+Action GetValueInMap(map<WorldState, Action, WorldStateComparator> m, WorldState key) {
+
+	map <WorldState, Action>::iterator it = m.begin();
+	while (it != m.end())
+	{
+		if (it->first == key)
+			return it->second;
+		it++;
+	}
+
+}
+bool FindKeyInMap(map<WorldState, int, WorldStateComparator> m, WorldState key) {
+
+	map <WorldState, int>::iterator it = m.begin();
+	while (it != m.end())
+	{
+		if (it->first == key)
+			return true;
+		it++;
+	}
+	return false;
+}
 void SceneGOAP::GOAPlan() {
 
 	//DEFINIM TOTES LES ACCIONS
 	//scout necesita : player viu -> enemic a la vista
-	Action scout(WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare));
+	Action scout("scout",WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), 
+		WorldState(dontCare, dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare), 10);
 	//searchWeapon necessita : player viu -> té arma
-	Action searchWeapon(WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare));
+	Action searchWeapon("search weapon", WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare),
+		WorldState(dontCare, isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), 20);
 	//craftBomb necessita : player viu -> té bomba
-	Action craftWeapon(WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), WorldState(dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare, dontCare));
+	Action craftBomb("craft bomb", WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare), 
+		WorldState(dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare, dontCare), 1);
+	//chaseEnemy necessita : player viu, enemy viu -> enemy close
+	Action chaseEnemy("chase enemy", WorldState(isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, isTrue),
+		WorldState(dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, isTrue, dontCare), 10);
+	//aim necessita : has Weapon, player viu, enemy viu, enemy visible -> enemy in line
+	Action aim("aim", WorldState(isTrue, isTrue, dontCare, dontCare, isTrue, dontCare, dontCare, isTrue),
+		WorldState(dontCare, dontCare, dontCare, dontCare, dontCare, isTrue, dontCare, dontCare), 7);
+	//shoot necessita : has Weapon, player viu, enemy viu, weapon loaded, enemy in line -> enemy dead
+	Action shoot("shoot", WorldState(isTrue, isTrue, isTrue, dontCare, isTrue, isTrue, dontCare, isTrue),
+		WorldState(dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, isFalse), 30);
+	//reload necessita : player viu, tenir arma -> arma carregada
+	Action reload("reload", WorldState(isTrue, isTrue, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare),
+		WorldState(dontCare, dontCare, isTrue, dontCare, dontCare, dontCare, dontCare, dontCare), 5);
+	//use bomb necessita : player viu, has bomb,enemy visible,enemy close, enemy viu -> enemy dead
+	Action useBomb("use bomb", WorldState(isTrue, dontCare, dontCare, isTrue, isTrue, dontCare, isTrue, isTrue),
+		WorldState(dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, dontCare, isFalse), 50);
 
 	vector <Action> allPossibleActions;
 	allPossibleActions.push_back(scout);
 	allPossibleActions.push_back(searchWeapon);
-	allPossibleActions.push_back(craftWeapon);
+	allPossibleActions.push_back(craftBomb);
+	allPossibleActions.push_back(chaseEnemy);
+	allPossibleActions.push_back(aim);
+	allPossibleActions.push_back(shoot);
+	allPossibleActions.push_back(reload);
+	allPossibleActions.push_back(useBomb);
 
+	int idCounter = 0;//per poder ordenar el mapa utilitzem ids per els diferents estats
+	
 	//Definim el primer estat en que nomes estàs viu i no tens res més
-	WorldState firstState(isTrue, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);//com que no l'hem tocat, la prioritat sera 0
+	WorldState firstState(isTrue, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isTrue);//com que no l'hem tocat, la prioritat sera 0
+	firstState.id = idCounter++;
+	
+	//Creem un estat goal random
+	int hasWeapon = rand() % 3; int loadedWeapon = rand() % 3; int hasBomb = rand() % 3; int visibleEnemy = rand() % 3; int linedEnemy = rand() % 3; int closeEnemy = rand() % 3; int deadEnemy = rand() % 3;
+	WorldState goal(isTrue, isTrue, (ourBoolean)loadedWeapon, isTrue, (ourBoolean)visibleEnemy, (ourBoolean)linedEnemy, (ourBoolean)closeEnemy, (ourBoolean)deadEnemy);	
+	cout << "GOAL STATE : "; goal.print(); cout << endl;
 	
 	//La cua ordenara segons el valor prioritat de la classe worldState amb el PriorityComparision que hem fet
 	priority_queue<WorldState, vector<WorldState>, PriorityComparision> frontier;	
 	frontier.emplace(firstState); 
 	
-	//Declarem els dos mapes utilitzant el nostre comparador que ens el demana per ordenar les claus
+	//Declarem els tres mapes utilitzant el nostre comparador que ens el demana per ordenar les claus
 	map<WorldState, WorldState, WorldStateComparator> came_from;
+
+	map<WorldState, Action, WorldStateComparator> detonator;
 
 	map <WorldState, int, WorldStateComparator> cost_so_far;	
 	cost_so_far[firstState] = 0;
@@ -334,25 +403,84 @@ void SceneGOAP::GOAPlan() {
 
 	WorldState current;
 	
-	//Proves mapa
-	/*
-	WorldState prova(isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse, isFalse);	
+	//Proves mapa	
+	/*WorldState prova(dontCare, dontCare, dontCare, dontCare, isTrue, dontCare, dontCare, dontCare);
+	prova.id = 1;
 	cost_so_far[prova] = 20; 
 
-	pair<WorldState, int> temp = make_pair(firstState, 15);
 	cost_so_far[firstState] = 15;//per canviar el valor amb la mateixa clau s'ha de fer aixi
-	
-	int keyProva = GetValueInMap(cost_so_far, prova);
-	cout << keyProva << endl;
-
+								 
 	cout << "COST SO FAR ARRAY" << endl;
 	map <WorldState, int>::iterator it = cost_so_far.begin();
 	while (it != cost_so_far.end())
 	{
 		cout << it->second << endl;
 		it++;
-	}
-	*/
+	}*/
+	 
 
+	while (!frontier.empty()) {
+
+		//Agafem l'estat amb més prioritat de la frontera
+		current = frontier.top();
+		frontier.pop();		
+		
+		//Creem els estats veïns que poguem	
+		for (int i = 0; i < allPossibleActions.size(); i++) {
+			if (current.CanApplyAction(allPossibleActions[i])) {
+				
+				//Creem el nou estat aplicant l'accio que toqui
+				WorldState newState = current.ApplyAction(allPossibleActions[i]);				
+				//cout << newState.allVariables[0] << "," << newState.allVariables[1] << "," << newState.allVariables[2] << "," << newState.allVariables[3] << "," << newState.allVariables[4] << "," << newState.allVariables[5] << "," << newState.allVariables[6] << "," << newState.allVariables[7] << endl;
+				
+				//Calculem nou cost
+				newCost = GetValueInMap(cost_so_far, current) + allPossibleActions[i].cost;
+				//si és el primer cop que el visitem o hem trobat un cost més petit l'afegim al map
+				if (!FindKeyInMap(cost_so_far, newState) || newCost < GetValueInMap(cost_so_far, newState)){
+					
+					//Creem nou id perque el map pugui ordenar-lo com a clau
+					newState.id = idCounter++;
+
+					//Afegim al mapa de cost acumulat de cada estat
+					cost_so_far[newState] = newCost;
+
+					//calculem prioritat i afegim a la frontera
+					newState.priority = newCost + newState.HeuristicTo(goal);					
+					frontier.push(newState);
+					
+					//Afegim al came from per recuperar despres per quins estats hem passat
+					came_from[newState] = current;
+
+					//Setegem quin és l'acció que ha provocat aquest estat
+					detonator[newState] = allPossibleActions[i];
+
+					//Si hem arrivat al estat que volem sortim
+					if (newState.GoalReached(goal)) {
+						cout << "Goal reached!" << endl;
+						goto createPlan;
+					}
+
+				}
+			}			
+		}		
+	}
+
+	createPlan:
+	
+	//Primer agafem l'últim estat, pq si té don't care el que hem triat sera diferent del últim real
+	map <WorldState, WorldState>::iterator it = came_from.end();
+	it--;
+	WorldState lastState = it->first;	
+
+	//Anem imprimint tots els estats que hem anat passant i les accions que els han provocat
+	while (lastState != firstState) {
+		lastState.print();
+		Action temp = GetValueInMap(detonator, lastState);
+		temp.printName();
+		lastState = GetValueInMap(came_from, lastState);
+	}
+	cout << "FIRST STATE : ";
+	firstState.print();
+	cout << endl;	
 
 }

@@ -84,4 +84,5 @@ public:
 	void printNeeds();
 	void changeState(stateEnum newState);
 	bool agentInPosition = true;
+	bool walking=true;
 };

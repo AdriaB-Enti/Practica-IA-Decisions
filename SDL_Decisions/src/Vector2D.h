@@ -1,9 +1,9 @@
 /* ========================================================================
-   File: Vector2D.h
-   Revision: 0.1
-   Creator: David Collado Ochoa
-   Notice: (C) Copyright 2016 by David Collado Ochoa. All Rights Reserved.
-   ======================================================================== */
+File: Vector2D.h
+Revision: 0.1
+Creator: David Collado Ochoa
+Notice: (C) Copyright 2016 by David Collado Ochoa. All Rights Reserved.
+======================================================================== */
 
 #pragma once
 
@@ -20,10 +20,10 @@ struct Vector2D
 {
 	float x = 0.0f;
 	float y = 0.0f;
-	
-	Vector2D(float valueX = 0.0f, float valueY = 0.0f): x{valueX}, y{valueY}
+
+	Vector2D(float valueX = 0.0f, float valueY = 0.0f) : x{ valueX }, y{ valueY }
 	{}
-	
+
 	inline float Length() const
 	{
 		return (float)sqrt(x * x + y * y);
@@ -33,7 +33,7 @@ struct Vector2D
 	{
 		return x * x + y * y;
 	}
-	
+
 	inline Vector2D operator+(const Vector2D& v)
 	{
 		return Vector2D(x + v.x, y + v.y);
@@ -43,7 +43,7 @@ struct Vector2D
 		x += v2.x;
 		y += v2.y;
 	}
-	
+
 	inline Vector2D operator-(const Vector2D& v)
 	{
 		return Vector2D(x - v.x, y - v.y);
@@ -53,7 +53,7 @@ struct Vector2D
 		x -= v.x;
 		y -= v.y;
 	}
-	
+
 	inline Vector2D operator*(float scalar)
 	{
 		return Vector2D(x * scalar, y * scalar);
@@ -63,7 +63,7 @@ struct Vector2D
 		x *= scalar;
 		y *= scalar;
 	}
-	
+
 	inline Vector2D operator/(float scalar)
 	{
 		return Vector2D(x / scalar, y / scalar);
@@ -83,11 +83,17 @@ struct Vector2D
 	{
 		return !operator==(rhs);
 	}
-	
+	inline bool operator<(const Vector2D& rhs) const
+	{
+		if (x < rhs.x || x == rhs.x && y < rhs.y)
+			return true;
+
+	}
+
 	inline Vector2D Normalize()
 	{
 		float l = Length();
-		if ( l > 0.0f)
+		if (l > 0.0f)
 		{
 			(*this) *= 1.0f / l;
 		}
@@ -96,9 +102,9 @@ struct Vector2D
 	static inline Vector2D Normalize(const Vector2D& v)
 	{
 		float l = v.Length();
-		if ( l > 0.0f)
+		if (l > 0.0f)
 		{
-			return Vector2D(v.x / l, v.y/ l);
+			return Vector2D(v.x / l, v.y / l);
 		}
 		else
 		{
@@ -185,7 +191,7 @@ namespace Vector2DUtils
 		// infinite version of its cone.
 		// We'll use Dot() to 
 		// determine angle between apexToPoint and axisVect.
-		bool isInInfiniteCone = (Vector2D::Dot(apexToPoint, axisVect) / 
+		bool isInInfiniteCone = (Vector2D::Dot(apexToPoint, axisVect) /
 			(apexToPoint.Length() * axisVect.Length())) > cosf(coneHalfAngle * (float)DEG2RAD);
 
 		if (!isInInfiniteCone)
@@ -220,7 +226,7 @@ namespace Vector2DUtils
 	}
 
 	// s1_start is line1 start, s1_end is line1 end, s2_start is line2 start, s2_end is line2 end
-	static bool SegmentSegmentIntersection(Vector2D s1_start, Vector2D s1_end, Vector2D s2_start, Vector2D s2_end, 
+	static bool SegmentSegmentIntersection(Vector2D s1_start, Vector2D s1_end, Vector2D s2_start, Vector2D s2_end,
 		bool doIntersectOnPoints = true, Vector2D* intersectionPoint = nullptr)
 	{
 		intersectionPoint = {};
